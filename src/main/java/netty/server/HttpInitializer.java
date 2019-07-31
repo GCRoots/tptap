@@ -14,7 +14,7 @@ public class HttpInitializer extends ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = socketChannel.pipeline();
         pipeline.addLast(new HttpResponseEncoder());
         pipeline.addLast(new HttpServerCodec());
-        pipeline.addLast(new HttpObjectAggregator(65535));
+//        pipeline.addLast(new HttpObjectAggregator(65535));
         pipeline.addLast(new ChunkedWriteHandler());
     }
 }

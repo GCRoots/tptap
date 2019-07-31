@@ -30,7 +30,7 @@ public class HttpServer {
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
 
         try {
-            Channel channel = bootstrap.bind(8081).sync().channel();
+            Channel channel = bootstrap.bind(8089).sync().channel();
             channel.closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();

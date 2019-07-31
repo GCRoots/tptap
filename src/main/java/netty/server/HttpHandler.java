@@ -4,19 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import pojo.Data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HttpHandler extends SimpleChannelInboundHandler {
-//    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
-//
-//    }
 
     private WebSocketServerHandshaker handshaker;
 
@@ -24,12 +21,35 @@ public class HttpHandler extends SimpleChannelInboundHandler {
     public void channelRead0(ChannelHandlerContext ctx, Object msg)
             throws Exception {
 
+        System.out.println(ctx.toString());
         if (msg instanceof FullHttpRequest) {
             // websocket连接请求
-            handleHttpRequest(ctx, (FullHttpRequest)msg);
+//            handleHttpRequest(ctx, (FullHttpRequest)msg);
+
+            FullHttpRequest req=(FullHttpRequest)msg;
+
+            // 获取请求的uri
+            String uri = req.uri();
+            Map<String,String> resMap = new HashMap<String, String>();
+            resMap.put("method",req.method().name());
+            resMap.put("uri",uri);
+            String s = "<html><head><title>test</title></head><body>你请求uri为：" + uri+"</body></html>";
+            // 创建http响应
+            FullHttpResponse response = new DefaultFullHttpResponse(
+                    HttpVersion.HTTP_1_1,
+                    HttpResponseStatus.OK,
+                    Unpooled.copiedBuffer(s, CharsetUtil.UTF_8));
+            // 设置头信息
+            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=UTF-8");
+            //response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain; charset=UTF-8");
+            // 将html write到客户端
+            ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+
         } else if (msg instanceof WebSocketFrame) {
             // websocket业务处理
             handleWebSocketRequest(ctx, (WebSocketFrame)msg);
+        } else {
+            System.out.println("非Http服务！！！！");
         }
     }
 
@@ -94,8 +114,6 @@ public class HttpHandler extends SimpleChannelInboundHandler {
         }
     }
 
-
-
     private void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, FullHttpResponse res) {
         // BAD_REQUEST(400) 客户端请求错误返回的应答消息
         if (res.status().code() != 200) {
@@ -113,4 +131,19 @@ public class HttpHandler extends SimpleChannelInboundHandler {
         }
     }
 
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        // 添加
+        Channel incoming = ctx.channel();
+        System.out.println("HttpClient:" + incoming.remoteAddress() + "连接");
+        System.out.println("客户端与服务端连接开启");
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        // 移除
+        Channel incoming = ctx.channel();
+        System.out.println("HttpClient:" + incoming.remoteAddress() + "掉线");
+        System.out.println("客户端与服务端连接关闭");
+    }
 }
