@@ -11,6 +11,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
+import pojo.Data;
 
 public class HttpHandler extends SimpleChannelInboundHandler {
 //    protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
@@ -54,11 +55,17 @@ public class HttpHandler extends SimpleChannelInboundHandler {
         TextWebSocketFrame text=(TextWebSocketFrame)req;
         JSONObject jsonObject= JSON.parseObject(text.text());
 
-        System.out.println(text.text());
-        ctx.channel().writeAndFlush(text.text());
-//        ctx.channel().write(new TextWebSocketFrame(((TextWebSocketFrame)req).text()));
+        Data data=JSON.parseObject(jsonObject.toString(),Data.class);
 
+        System.out.println(data.toString());
 
+        Data ret=new Data();
+        ret.setFault("F");
+        ret.setHostName("abc");
+
+        String waf=JSON.toJSONString(ret);
+
+        ctx.channel().writeAndFlush(waf);
     }
 
 
