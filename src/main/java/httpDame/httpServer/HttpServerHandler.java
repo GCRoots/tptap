@@ -44,11 +44,12 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
         if (msg instanceof HttpContent) {
             //这里来做content的相关处理吧
             try {
+
                 HttpContent content = (HttpContent) msg;
                 ByteBuf buf = content.content();
                 String inputMessage = buf.toString(CharsetUtil.UTF_8);
-//                buf.release();
                 Data data = JSON.parseObject(inputMessage, Data.class);
+
                 String hostName=data.getHostName();
 
                 System.out.println(hostName);

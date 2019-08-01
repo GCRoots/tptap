@@ -12,11 +12,11 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
         //对response进行编码
-        socketChannel.pipeline().addLast(new HttpResponseEncoder());
+        pipeline.addLast(new HttpResponseEncoder());
         //对request进行解码
-        socketChannel.pipeline().addLast(new HttpRequestDecoder());
-        socketChannel.pipeline().addLast(new HttpObjectAggregator(65536));
+        pipeline.addLast(new HttpRequestDecoder());
+        pipeline.addLast(new HttpObjectAggregator(65536));
         //处理request并封装response的返回
-        socketChannel.pipeline().addLast(new HttpServerHandler());
+        pipeline.addLast(new HttpServerHandler());
     }
 }

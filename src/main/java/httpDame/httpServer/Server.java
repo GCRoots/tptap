@@ -19,8 +19,10 @@ public class Server {
 
         try {
             ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
+            b.group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 128)
+                    .childHandler(new HttpServerInitializer())
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
 
             ChannelFuture cf = b.bind(port).sync();
