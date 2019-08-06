@@ -57,7 +57,6 @@ public class Data {
 
 //  Humidity
 
-
     public String getUpTimer() {
         return UpTimer;
     }
