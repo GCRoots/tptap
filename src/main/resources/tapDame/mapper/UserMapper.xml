@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- tapDame.mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="tapDame.mapper.UserMapper">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+
+
+    <resultMap  id="goodResult" type="">
+        <id property="uid" column="uid"/>
+        <result property="one" column="one"/>
+    </resultMap>
+
+
+    <select id="findByPhone" resultType="tapDame.pojo.User">
+        select * from user where phone = #{phone}
+    </select>
+
+    <insert id="addUser">
+        insert
+        into user (phone, password)
+        value (#{phone},#{password})
+    </insert>
+
+    <update id="upUser">
+        update user set
+            phone =#{phone},
+            mail = #{password}
+    </update>
+
+    <delete id="delUser">
+        select *from user where phone = #{phone}
+    </delete>
+
+    <select id="getAll" resultType="tapDame.pojo.User">
+        select *from user
+    </select>
+
+</mapper>
