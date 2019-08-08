@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- tapDame.mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="tapDame.dao.HomeStatusDao">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+
+
+    <resultMap  id="goodResult" type="tapDame.pojo.HomeStatus">
+        <id property="tapId" column="tap_id"/>
+        <result property="microphone" column="microphone"/>
+        <result property="camera" column="camera"/>
+        <result property="ifUsed" column="if_used"/>
+        <result property="todayUsed" column="today_used"/>
+        <result property="purpose" column="purpose"/>
+    </resultMap>
+
+
+    <select id="findByHId" resultType="tapDame.pojo.HomeStatus">
+        select * from home_status where tap_id = #{tapId}
+    </select>
+
+    <insert id="addHomeStatus">
+        insert
+        into home_status(tap_id, microphone, camera, if_used, today_used, purpose)
+        value (#{tapId},#{microphone},#{camera},#{ifUsed},#{todayUsed},#{purpose})
+    </insert>
+
+    <update id="updateHomeStatus">
+        update home_status set
+            tap_id=#{tapId},
+            microphone=#{microphone},
+            camera=#{camera},
+            if_used=#{ifUsed},
+            today_used=#{todayUsed},
+            purpose=#{purpose}
+    </update>
+
+    <delete id="delHomeStatus">
+        select *from home_status where tap_id = #{tapId}
+    </delete>
+
+
+</mapper>

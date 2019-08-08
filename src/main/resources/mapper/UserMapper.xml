@@ -3,15 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- tapDame.mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
-<mapper namespace="tapDame.mapper.UserMapper">
+<mapper namespace="tapDame.dao.UserDao">
     <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
        resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
      -->
 
 
-    <resultMap  id="goodResult" type="">
-        <id property="uid" column="uid"/>
-        <result property="one" column="one"/>
+    <resultMap  id="goodResult" type="tapDame.pojo.User">
+        <id property="phone" column="phone"/>
+        <result property="password" column="password"/>
     </resultMap>
 
 
@@ -25,7 +25,7 @@
         value (#{phone},#{password})
     </insert>
 
-    <update id="upUser">
+    <update id="updateUser">
         update user set
             phone =#{phone},
             mail = #{password}
@@ -35,8 +35,5 @@
         select *from user where phone = #{phone}
     </delete>
 
-    <select id="getAll" resultType="tapDame.pojo.User">
-        select *from user
-    </select>
 
 </mapper>
