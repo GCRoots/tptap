@@ -12,13 +12,13 @@
     <resultMap  id="goodResult" type="tapDame.pojo.FarmStatus">
         <id property="tapId" column="tap_id"/>
         <result property="camera" column="camera"/>
-        <result property="" column=""/>
-        <result property="" column=""/>
-        <result property="" column=""/>
-        <result property="" column=""/>
-        <result property="" column=""/>
-        <result property="" column=""/>
-        <result property="" column=""/>
+        <result property="sensor1" column="sensor_1"/>
+        <result property="sensor2" column="sensor_2"/>
+        <result property="sensor3" column="sensor_3"/>
+        <result property="sensor4" column="sensor_4"/>
+        <result property="sensor5" column="sensor_5"/>
+        <result property="lastTime" column="last_time"/>
+        <result property="humidity" column="humidity"/>
     </resultMap>
 
 

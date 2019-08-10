@@ -24,7 +24,6 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
 
         Data reData=new Data();
 
-        String returnMessage = "";
         String uri="";
 
         if (msg instanceof HttpRequest) {
@@ -57,12 +56,11 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 System.out.println();
 
 
+                System.out.println(data.toString());
 
+                String humidity=data.getHumidity();
 
-
-                String hostName=data.getHostName();
-
-                System.out.println(hostName);
+                System.out.println(humidity);
                 System.out.println(buf.toString(CharsetUtil.UTF_8));
 
             } catch (Exception e) {

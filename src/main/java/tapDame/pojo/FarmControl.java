@@ -2,8 +2,24 @@ package tapDame.pojo;
 
 public class FarmControl {
     private String humidity;
-    private String weather;
-    private String water;
+    private String tmp;
+    private String need;
+
+    public String getTmp() {
+        return tmp;
+    }
+
+    public void setTmp(String tmp) {
+        this.tmp = tmp;
+    }
+
+    public String getNeed() {
+        return need;
+    }
+
+    public void setNeed(String need) {
+        this.need = need;
+    }
 
     public String getHumidity() {
         return humidity;
@@ -13,21 +29,6 @@ public class FarmControl {
         this.humidity = humidity;
     }
 
-    public String getWeather() {
-        return weather;
-    }
-
-    public void setWeather(String weather) {
-        this.weather = weather;
-    }
-
-    public String getWater() {
-        return water;
-    }
-
-    public void setWater(String water) {
-        this.water = water;
-    }
 
 
 }

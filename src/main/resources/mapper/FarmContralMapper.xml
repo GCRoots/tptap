@@ -11,28 +11,29 @@
 
     <resultMap  id="goodResult" type="tapDame.pojo.FarmControl">
         <id property="humidity" column="humidity"/>
-        <result property="weather" column="weather"/>
-        <result property="water" column="water"/>
+        <result property="tmp" column="tmp"/>
+        <result property="need" column="need"/>
+
     </resultMap>
 
 
-    <select id="findByHW" resultType="tapDame.pojo.FarmControl">
+    <select id="findByHT" resultType="tapDame.pojo.FarmControl">
         select * from farm_control
-        where humidity=#{humidity} and weather==#{weather}
+        where humidity=#{humidity} and tmp=#{tmp}
 
     </select>
 
     <insert id="addFarmControl">
         insert
-        into farm_control(humidity, weather, water)
-        value (#{humidity},#{weather},#{water})
+        into farm_control(humidity,tmp,need)
+        value (#{humidity},#{tmp},#{need})
     </insert>
 
     <update id="updateFarmControl">
         update farm_control set
             humidity=#{humidity},
-            weather=#{weather},
-            water=#{water}
+            tmp=#{tmp},
+            need=#{need}
     </update>
 
 

@@ -40,7 +40,7 @@ public class ServerMethods {
 
 
 
-    public Data waterContral(Data data) throws IOException {
+    public Data homeWaterContral(Data data) throws IOException {
 
         Data reData=new Data();
         HomeContral homeContral;
@@ -61,6 +61,7 @@ public class ServerMethods {
             homeContral=homeContralDao.findByType(image);
             String water=homeContral.getWater();
 
+            System.out.println(water);
             reData.setWater(water);
 
             return reData;

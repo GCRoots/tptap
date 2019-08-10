@@ -15,17 +15,18 @@ public class FarmContralDaoImp implements FarmContralDao {
     private SqlSession session;
 
     @Override
-    public FarmControl findByHW(String humidity, String weather) {
+    public FarmControl findByHT(String humidity,String tmp) {
 
         FarmControl farmControl=new FarmControl();
 
+        System.out.println(humidity+"\t");
         try {
             InputStream inputStream= Resources.getResourceAsStream("mybatis/mybatis.xml");
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             session=sqlSessionFactory.openSession();
 
-            FarmContralDao homeStatusDao=session.getMapper(FarmContralDao.class);
-            farmControl=homeStatusDao.findByHW(humidity,weather);
+            FarmContralDao farmContralDao=session.getMapper(FarmContralDao.class);
+            farmControl=farmContralDao.findByHT(humidity,tmp);
 
             session.commit();
         }catch (IOException e) {
@@ -44,7 +45,7 @@ public class FarmContralDaoImp implements FarmContralDao {
             InputStream inputStream= Resources.getResourceAsStream("mybatis/mybatis.xml");
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             session=sqlSessionFactory.openSession();
-            session.insert("addFarmContral",farmControl);
+            session.insert("addFarmControl",farmControl);
 
             session.commit();
 

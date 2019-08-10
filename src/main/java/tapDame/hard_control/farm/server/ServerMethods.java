@@ -2,7 +2,12 @@ package tapDame.hard_control.farm.server;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import tapDame.dao.FarmContralDao;
+import tapDame.dao.FarmStatusDao;
+import tapDame.dao.ipm.FarmContralDaoImp;
+import tapDame.dao.ipm.FarmStatusDaoImp;
 import tapDame.pojo.Data;
+import tapDame.pojo.FarmControl;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -13,6 +18,9 @@ import java.net.URL;
 
 public class ServerMethods {
 
+    FarmContralDao farmContralDao=new FarmContralDaoImp();
+    FarmStatusDao farmStatusDao=new FarmStatusDaoImp();
+
 
     public static void main(String[] args) {
         ServerMethods serverMethods=new ServerMethods();
@@ -20,16 +28,16 @@ public class ServerMethods {
         serverMethods.weather();
     }
 
-    public Data update(String jsonString){
+    public void update(Data data){
 
         System.out.println("updata");
-        System.out.println(jsonString);
 
-        return null;
+
 
     }
 
-    public Data farmContral(Data data){
+    public Data farmWaterContral(Data data){
+
         Data reData=new Data();
 
         JSONObject jsonObject=new JSONObject(weather());
@@ -37,20 +45,29 @@ public class ServerMethods {
 //        相对湿度
         String hum=jsonObject.getString("hum");
 //        温度
-        String tmp=jsonObject.getString("tnp");
-//        实况天气
-        String cond_txt=jsonObject.getString("cond_txt");
+        String tmp=jsonObject.getString("tmp");
 
+        FarmControl farmControl=farmContralDao.findByHT(hum,tmp);
 
+//        当前条件下，需要浇水的湿度
+        int need=Integer.parseInt(farmControl.getNeed());
+//        实际湿度
+        int humidity=Integer.parseInt(data.getHumidity());
 
+        if (humidity<need){
+//            当前湿度与需要浇水的湿度差决定要浇水的量
+//            算法后补
+            int value=need-humidity;
 
+            int water=value*10;
+            System.out.println(water);
 
+            reData.setWater(String.valueOf(water));
+        }else {
+            reData.setWater("0");
+        }
 
-
-        String sensor1=data.getSensor1();
-
-
-
+        update(data);
 
         return reData;
     }
@@ -91,7 +108,7 @@ public class ServerMethods {
             JSONObject jsonObject=new JSONObject(sb.toString()).getJSONArray("HeWeather6")
                     .getJSONObject(0).getJSONObject("now");
 //            System.out.println(sb.toString());
-            System.out.println(jsonObject.toString(2));
+//            System.out.println(jsonObject.toString(2));
 
             ret=jsonObject.toString();
 

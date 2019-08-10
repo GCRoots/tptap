@@ -46,11 +46,19 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                     System.out.println(s);
                 }
 
-                Data data = JSON.parseObject(inputMessage, Data.class);
+                System.out.println();
+                System.out.println(buf.toString(CharsetUtil.UTF_8));
+
+
+                Data data=JSON.parseObject(inputMessage,Data.class);
+
+                System.out.println(data.toString());
+
                 Class proxy = Class.forName(className);
                 ServerMethods handler=(ServerMethods)proxy.getConstructor().newInstance();
                 Method method=proxy.getDeclaredMethod(strings[strings.length-1],Data.class);
                 reData= (Data) method.invoke(handler,data);
+
 
 
 
@@ -66,8 +74,6 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
 
 
             //response相关。。。
-
-            reData.setFault("T");
 
 
             String res = JSON.toJSONString(reData);
