@@ -8,6 +8,7 @@ import tapDame.dao.ipm.FarmContralDaoImp;
 import tapDame.dao.ipm.FarmStatusDaoImp;
 import tapDame.pojo.Data;
 import tapDame.pojo.FarmControl;
+import tapDame.pojo.FarmStatus;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -15,31 +16,18 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ServerMethods {
 
     FarmContralDao farmContralDao=new FarmContralDaoImp();
     FarmStatusDao farmStatusDao=new FarmStatusDaoImp();
 
-
-    public static void main(String[] args) {
-        ServerMethods serverMethods=new ServerMethods();
-
-        serverMethods.weather();
-    }
-
-    public void update(Data data){
-
-        System.out.println("updata");
-
-
-
-    }
-
     public Data farmWaterContral(Data data){
 
-        Data reData=new Data();
 
+        Data reData=new Data();
         JSONObject jsonObject=new JSONObject(weather());
 
 //        相对湿度
@@ -47,14 +35,18 @@ public class ServerMethods {
 //        温度
         String tmp=jsonObject.getString("tmp");
 
-        FarmControl farmControl=farmContralDao.findByHT(hum,tmp);
-
+//        FarmControl farmControl=farmContralDao.findByHT(hum,tmp);
+        FarmControl farmControl=farmContralDao.findByHT("70","27");
 //        当前条件下，需要浇水的湿度
         int need=Integer.parseInt(farmControl.getNeed());
 //        实际湿度
         int humidity=Integer.parseInt(data.getHumidity());
 
+        System.out.println();
+
         if (humidity<need){
+            updateWithWater(data);
+
 //            当前湿度与需要浇水的湿度差决定要浇水的量
 //            算法后补
             int value=need-humidity;
@@ -63,14 +55,51 @@ public class ServerMethods {
             System.out.println(water);
 
             reData.setWater(String.valueOf(water));
+
+            return reData;
+
         }else {
-            reData.setWater("0");
+            updateWithoutWater(data);
+            return null;
         }
-
-        update(data);
-
-        return reData;
     }
+
+
+    public void updateWithoutWater(Data data){
+
+        FarmStatus farmStatus=new FarmStatus();
+        farmStatus.setTapId(data.getTapId());
+        farmStatus.setCamera(data.getCamera());
+        farmStatus.setSensor1(data.getSensor1());
+        farmStatus.setSensor2(data.getSensor2());
+        farmStatus.setSensor3(data.getSensor3());
+        farmStatus.setSensor4(data.getSensor4());
+        farmStatus.setSensor5(data.getSensor5());
+        farmStatus.setHumidity(data.getHumidity());
+        farmStatus.setLastTime(farmStatusDao.findByFId(data.getTapId()).getLastTime());
+
+        farmStatusDao.updateFarmStatus(farmStatus);
+    }
+
+    public void updateWithWater(Data data){
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String lastTime=df.format(new Date());
+
+        FarmStatus farmStatus=new FarmStatus();
+        farmStatus.setTapId(data.getTapId());
+        farmStatus.setCamera(data.getCamera());
+        farmStatus.setSensor1(data.getSensor1());
+        farmStatus.setSensor2(data.getSensor2());
+        farmStatus.setSensor3(data.getSensor3());
+        farmStatus.setSensor4(data.getSensor4());
+        farmStatus.setSensor5(data.getSensor5());
+        farmStatus.setHumidity(data.getHumidity());
+        farmStatus.setLastTime(lastTime);
+
+        farmStatusDao.updateFarmStatus(farmStatus);
+    }
+
 
     private String weather(){
         //参数字符串，如果拼接在请求链接之后，需要对中文进行 URLEncode   字符集 UTF-8

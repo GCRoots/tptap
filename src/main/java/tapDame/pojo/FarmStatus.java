@@ -83,4 +83,19 @@ public class FarmStatus {
     public void setHumidity(String humidity) {
         this.humidity = humidity;
     }
+
+    @Override
+    public String toString() {
+        return "FarmStatus{" +
+                "tapId='" + tapId + '\'' +
+                ", camera='" + camera + '\'' +
+                ", sensor1='" + sensor1 + '\'' +
+                ", sensor2='" + sensor2 + '\'' +
+                ", sensor3='" + sensor3 + '\'' +
+                ", sensor4='" + sensor4 + '\'' +
+                ", sensor5='" + sensor5 + '\'' +
+                ", lastTime='" + lastTime + '\'' +
+                ", humidity='" + humidity + '\'' +
+                '}';
+    }
 }

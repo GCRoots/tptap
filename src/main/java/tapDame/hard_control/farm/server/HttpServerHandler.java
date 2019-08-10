@@ -59,9 +59,6 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 Method method=proxy.getDeclaredMethod(strings[strings.length-1],Data.class);
                 reData= (Data) method.invoke(handler,data);
 
-
-
-
                 System.out.println(buf.toString(CharsetUtil.UTF_8));
 
             } catch (Exception e) {
@@ -75,24 +72,27 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
 
             //response相关。。。
 
+            if(reData!=null) {
 
-            String res = JSON.toJSONString(reData);
+                String res = JSON.toJSONString(reData);
 
-            FullHttpResponse response = new DefaultFullHttpResponse(
-                    HttpVersion.HTTP_1_1,
-                    HttpResponseStatus.OK,
-                    Unpooled.wrappedBuffer(res.getBytes("UTF-8")));
+                FullHttpResponse response = new DefaultFullHttpResponse(
+                        HttpVersion.HTTP_1_1,
+                        HttpResponseStatus.OK,
+                        Unpooled.wrappedBuffer(res.getBytes("UTF-8")));
 
-            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
-            response.headers().set(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
-            if (HttpUtil.isKeepAlive(request)) {
-                response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+                response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
+                response.headers().set(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+                response.headers().set(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
+                if (HttpUtil.isKeepAlive(request)) {
+                    response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+
+                }
+
+                ctx.write(response);
+                ctx.flush();
 
             }
-
-            ctx.write(response);
-            ctx.flush();
         }
 
 

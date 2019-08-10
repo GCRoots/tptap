@@ -22,6 +22,8 @@ public class Data {
     private String sensor4;
     private String sensor5;
 
+    private String tapId;
+
     private String tmp;
 
     private String need;
@@ -284,6 +286,14 @@ public class Data {
         this.lastTime = lastTime;
     }
 
+    public String getTapId() {
+        return tapId;
+    }
+
+    public void setTapId(String tapId) {
+        this.tapId = tapId;
+    }
+
     @Override
     public String toString() {
         return "Data{" +
@@ -299,6 +309,7 @@ public class Data {
                 ", sensor3='" + sensor3 + '\'' +
                 ", sensor4='" + sensor4 + '\'' +
                 ", sensor5='" + sensor5 + '\'' +
+                ", tapId='" + tapId + '\'' +
                 ", tmp='" + tmp + '\'' +
                 ", need='" + need + '\'' +
                 ", phone='" + phone + '\'' +

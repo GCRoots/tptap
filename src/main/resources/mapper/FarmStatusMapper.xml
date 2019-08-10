@@ -12,11 +12,11 @@
     <resultMap  id="goodResult" type="tapDame.pojo.FarmStatus">
         <id property="tapId" column="tap_id"/>
         <result property="camera" column="camera"/>
-        <result property="sensor1" column="sensor_1"/>
-        <result property="sensor2" column="sensor_2"/>
-        <result property="sensor3" column="sensor_3"/>
-        <result property="sensor4" column="sensor_4"/>
-        <result property="sensor5" column="sensor_5"/>
+        <result property="sensor1" column="sensor1"/>
+        <result property="sensor2" column="sensor2"/>
+        <result property="sensor3" column="sensor3"/>
+        <result property="sensor4" column="sensor4"/>
+        <result property="sensor5" column="sensor5"/>
         <result property="lastTime" column="last_time"/>
         <result property="humidity" column="humidity"/>
     </resultMap>
@@ -28,7 +28,7 @@
 
     <insert id="addFarmStatus">
         insert
-        into farm_status(tap_id,camera,sensor_1,sensor_2,sensor_3,sensor_4,sensor_5,last_time,humidity)
+        into farm_status(tap_id,camera,sensor1,sensor2,sensor3,sensor4,sensor5,last_time,humidity)
         value (#{tapId},#{camera},#{sensor1},#{sensor2},#{sensor3},#{sensor4},#{sensor5},#{lastTime},#{humidity})
     </insert>
 
@@ -36,11 +36,11 @@
         update farm_status set
             tap_id=#{tapId},
             camera=#{camera},
-            sensor_1=#{sensor1},
-            sensor_2=#{sensor2},
-            sensor_3=#{sensor3},
-            sensor_4=#{sensor4},
-            sensor_5=#{sensor5},
+            sensor1=#{sensor1},
+            sensor2=#{sensor2},
+            sensor3=#{sensor3},
+            sensor4=#{sensor4},
+            sensor5=#{sensor5},
             last_time=#{lastTime},
             humidity=#{humidity}
     </update>
