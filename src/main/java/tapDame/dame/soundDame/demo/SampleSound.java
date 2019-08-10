@@ -45,6 +45,7 @@ public class SampleSound {
         // 对语音二进制数据进行识别
         byte[] data = Util.readFileByBytes(path);     //readFileByBytes仅为获取二进制数据示例
         JSONObject asrRes2 = client.asr(data, "m4a", 16000, null);
+
         System.out.println(asrRes2);
 
     }

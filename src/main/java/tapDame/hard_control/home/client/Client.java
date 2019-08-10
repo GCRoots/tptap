@@ -32,7 +32,7 @@ Client {
 
             ChannelFuture f = b.connect(host, port).sync();
 
-            URI uri = new URI("http://127.0.0.1:8089/update");
+            URI uri = new URI("http://127.0.0.1:8089/waterContral");
             String msg = "{\"HostName\":\"cc\"}";
             FullHttpRequest request=new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET,
                     uri.toASCIIString(), Unpooled.wrappedBuffer(msg.getBytes("UTF-8")));

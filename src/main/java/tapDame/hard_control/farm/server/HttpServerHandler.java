@@ -19,10 +19,9 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-
+        Data reData=new Data();
         long start = System.nanoTime();
 
-        String returnMessage = "";
         String uri="";
 
         if (msg instanceof HttpRequest) {
@@ -40,7 +39,7 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 ByteBuf buf = content.content();
                 String inputMessage = buf.toString(CharsetUtil.UTF_8);
 
-                String className = "tapDame.hard_control.home.server.ServerMethods";
+                String className = "tapDame.hard_control.farm.server.ServerMethods";
 
                 String[] strings=uri.split("/");
                 for (String s:strings){
@@ -51,15 +50,10 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 Class proxy = Class.forName(className);
                 ServerMethods handler=(ServerMethods)proxy.getConstructor().newInstance();
                 Method method=proxy.getDeclaredMethod(strings[strings.length-1],Data.class);
-                method.invoke(handler,data);
+                reData= (Data) method.invoke(handler,data);
 
 
 
-
-
-                String hostName=data.getHostName();
-
-                System.out.println(hostName);
                 System.out.println(buf.toString(CharsetUtil.UTF_8));
 
             } catch (Exception e) {
@@ -67,13 +61,12 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
             }
 
             /*
-             *这中间可以写service,dao,等等的东西。。。感兴趣的话，大家fork一下代码，然后自由发挥就行。
+             *这中间可以写service,dao等等的东西。,。。感兴趣的话，大家fork一下代码，然后自由发挥就行。
              * */
 
 
             //response相关。。。
 
-            Data reData=new Data();
             reData.setFault("T");
 
 

@@ -22,6 +22,8 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
 
         long start = System.nanoTime();
 
+        Data reData=new Data();
+
         String returnMessage = "";
         String uri="";
 
@@ -51,7 +53,7 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 Class proxy = Class.forName(className);
                 ServerMethods handler=(ServerMethods)proxy.getConstructor().newInstance();
                 Method method=proxy.getDeclaredMethod(strings[strings.length-1],Data.class);
-                method.invoke(handler,data);
+                reData= (Data) method.invoke(handler,data);
                 System.out.println();
 
 
@@ -64,7 +66,7 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 System.out.println(buf.toString(CharsetUtil.UTF_8));
 
             } catch (Exception e) {
-                System.out.println("bad bad bad");
+                System.out.println("HttpContent bad");
             }
 
             /*
@@ -74,8 +76,6 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
 
             //response相关。。。
 
-            Data reData=new Data();
-            reData.setFault("T");
 
 
             String res = JSON.toJSONString(reData);
