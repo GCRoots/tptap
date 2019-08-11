@@ -2,7 +2,6 @@ package tapDame.hard_control.home.server;
 
 import com.baidu.aip.imageclassify.AipImageClassify;
 import com.baidu.aip.speech.AipSpeech;
-import com.baidu.aip.util.Util;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import tapDame.dao.HomeContralDao;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ServerMethods {
+public class HomeServerMethods {
 
     //设置APPID/AK/SK
     public static final String APP_ID = "16946201";
@@ -32,7 +31,7 @@ public class ServerMethods {
 
 
     public static void main(String[] args) throws IOException {
-        ServerMethods methods=new ServerMethods();
+        HomeServerMethods methods=new HomeServerMethods();
 //        methods.select();
 
 

@@ -19,7 +19,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ServerMethods {
+public class FarmServerMethods {
 
     FarmContralDao farmContralDao=new FarmContralDaoImp();
     FarmStatusDao farmStatusDao=new FarmStatusDaoImp();

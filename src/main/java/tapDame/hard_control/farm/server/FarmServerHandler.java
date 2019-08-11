@@ -12,7 +12,7 @@ import tapDame.pojo.Data;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
-public class HttpServerHandler extends ChannelInboundHandlerAdapter {
+public class FarmServerHandler extends ChannelInboundHandlerAdapter {
 
     private FullHttpRequest request;
 
@@ -39,7 +39,7 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 ByteBuf buf = content.content();
                 String inputMessage = buf.toString(CharsetUtil.UTF_8);
 
-                String className = "tapDame.hard_control.farm.server.ServerMethods";
+                String className = "tapDame.hard_control.farm.server.FarmServerMethods";
 
                 String[] strings=uri.split("/");
                 for (String s:strings){
@@ -55,7 +55,7 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
                 System.out.println(data.toString());
 
                 Class proxy = Class.forName(className);
-                ServerMethods handler=(ServerMethods)proxy.getConstructor().newInstance();
+                FarmServerMethods handler=(FarmServerMethods)proxy.getConstructor().newInstance();
                 Method method=proxy.getDeclaredMethod(strings[strings.length-1],Data.class);
                 reData= (Data) method.invoke(handler,data);
 

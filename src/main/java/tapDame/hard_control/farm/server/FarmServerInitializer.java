@@ -7,7 +7,7 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 
-public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
+public class FarmServerInitializer extends ChannelInitializer<SocketChannel> {
 
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
@@ -17,6 +17,6 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(new HttpRequestDecoder());
         pipeline.addLast(new HttpObjectAggregator(65536));
         //处理request并封装response的返回
-        pipeline.addLast(new HttpServerHandler());
+        pipeline.addLast(new FarmServerHandler());
     }
 }
