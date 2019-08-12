@@ -1,5 +1,6 @@
 package tapDame.hard_control.home.server;
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.aip.imageclassify.AipImageClassify;
 import com.baidu.aip.speech.AipSpeech;
 import org.json.JSONArray;
@@ -27,19 +28,7 @@ public class HomeServerMethods {
     private HomeStatusDao homeStatusDao=new HomeStatusDaoImp();
 
 
-
-
-
-    public static void main(String[] args) throws IOException {
-        HomeServerMethods methods=new HomeServerMethods();
-//        methods.select();
-
-
-    }
-
-
-
-    public Data homeWaterContral(Data data) throws IOException {
+    public String homeWaterContral(Data data) throws IOException {
 
         Data reData=new Data();
         HomeContral homeContral;
@@ -52,7 +41,6 @@ public class HomeServerMethods {
 
         System.out.println(image);
 
-        
         if (image.equals(null)&&sound.equals(null)){
             return null;
         }else if (sound.equals("洗手")&&!image.equals("手")){
@@ -64,7 +52,9 @@ public class HomeServerMethods {
             System.out.println(water);
             reData.setWater(water);
 
-            return reData;
+            String res= JSON.toJSONString(reData);
+
+            return res;
 
         }
     }

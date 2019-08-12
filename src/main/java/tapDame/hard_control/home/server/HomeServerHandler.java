@@ -22,7 +22,7 @@ public class HomeServerHandler extends ChannelInboundHandlerAdapter {
 
         long start = System.nanoTime();
 
-        Data reData=new Data();
+        String res="";
 
         String uri="";
 
@@ -52,11 +52,11 @@ public class HomeServerHandler extends ChannelInboundHandlerAdapter {
                 Class proxy = Class.forName(className);
                 HomeServerMethods handler=(HomeServerMethods)proxy.getConstructor().newInstance();
                 Method method=proxy.getDeclaredMethod(strings[strings.length-1],Data.class);
-                reData= (Data) method.invoke(handler,data);
+                res= (String) method.invoke(handler,data);
                 System.out.println();
 
 
-                System.out.println(data.toString());
+//                System.out.println(data.toString());
 
                 String humidity=data.getHumidity();
 
@@ -74,9 +74,6 @@ public class HomeServerHandler extends ChannelInboundHandlerAdapter {
 
             //response相关。。。
 
-
-
-            String res = JSON.toJSONString(reData);
 
             FullHttpResponse response = new DefaultFullHttpResponse(
                     HttpVersion.HTTP_1_1,

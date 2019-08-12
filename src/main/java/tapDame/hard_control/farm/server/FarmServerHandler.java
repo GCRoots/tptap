@@ -19,7 +19,7 @@ public class FarmServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-        Data reData=new Data();
+        String res="";
         long start = System.nanoTime();
 
         String uri="";
@@ -57,7 +57,7 @@ public class FarmServerHandler extends ChannelInboundHandlerAdapter {
                 Class proxy = Class.forName(className);
                 FarmServerMethods handler=(FarmServerMethods)proxy.getConstructor().newInstance();
                 Method method=proxy.getDeclaredMethod(strings[strings.length-1],Data.class);
-                reData= (Data) method.invoke(handler,data);
+                res= (String) method.invoke(handler,data);
 
                 System.out.println(buf.toString(CharsetUtil.UTF_8));
 
@@ -72,9 +72,7 @@ public class FarmServerHandler extends ChannelInboundHandlerAdapter {
 
             //response相关。。。
 
-            if(reData!=null) {
-
-                String res = JSON.toJSONString(reData);
+            if(!res.equals("")) {
 
                 FullHttpResponse response = new DefaultFullHttpResponse(
                         HttpVersion.HTTP_1_1,
