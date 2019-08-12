@@ -52,6 +52,7 @@ public class HomeServerMethods {
 
         System.out.println(image);
 
+        
         if (image.equals(null)&&sound.equals(null)){
             return null;
         }else if (sound.equals("洗手")&&!image.equals("手")){
