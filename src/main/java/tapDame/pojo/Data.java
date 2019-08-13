@@ -33,6 +33,8 @@ public class Data {
 
     private String password;
 
+    private String idCode;
+
     private String success; //  T/F
 
 //    软件——家用
@@ -294,6 +296,15 @@ public class Data {
         this.tapId = tapId;
     }
 
+    public String getIdCode() {
+        return idCode;
+    }
+
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
+    }
+
+
     @Override
     public String toString() {
         return "Data{" +
@@ -314,6 +325,7 @@ public class Data {
                 ", need='" + need + '\'' +
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
+                ", idCode='" + idCode + '\'' +
                 ", success='" + success + '\'' +
                 ", microphone='" + microphone + '\'' +
                 ", camera='" + camera + '\'' +
