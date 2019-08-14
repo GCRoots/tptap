@@ -11,6 +11,7 @@ import tapDame.dao.ipm.HomeContralDaoImp;
 import tapDame.dao.ipm.HomeStatusDaoImp;
 import tapDame.pojo.Data;
 import tapDame.pojo.HomeContral;
+import tapDame.pojo.HomeStatus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,6 +52,19 @@ public class HomeServerMethods {
 
             System.out.println(water);
             reData.setWater(water);
+
+            HomeStatus homeStatus=homeStatusDao.findByHId(data.getTapId());
+
+            int today=Integer.parseInt(homeStatus.getTodayUsed())+Integer.parseInt(water);
+            homeStatus.setTodayUsed(String.valueOf(today));
+
+            com.alibaba.fastjson.JSONObject jsonObject=JSON.parseObject(homeStatus.getPurpose());
+            String type=jsonObject.getString(sound);
+            int types=Integer.parseInt(type)+Integer.parseInt(water);
+            jsonObject.put(sound,String.valueOf(types));
+            homeStatus.setPurpose(JSON.toJSONString(jsonObject));
+
+            homeStatusDao.updateHomeStatus(homeStatus);
 
             String res= JSON.toJSONString(reData);
 
