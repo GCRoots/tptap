@@ -51,6 +51,7 @@
         <mapper resource="mapper/FarmStatusMapper.xml"/>
         <mapper resource="mapper/HomeContralMapper.xml"/>
         <mapper resource="mapper/FarmContralMapper.xml"/>
+        <mapper resource="mapper/DailyWaterMapper.xml"/>
     </mappers>
 
 

@@ -37,7 +37,7 @@ public class FarmStatusDaoImp implements FarmStatusDao {
     }
 
     @Override
-    public void addFarmStatus(FarmStatus farmStatus) {
+    public void insertFarmStatus(FarmStatus farmStatus) {
         try {
             InputStream inputStream= Resources.getResourceAsStream("mybatis/mybatis.xml");
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);

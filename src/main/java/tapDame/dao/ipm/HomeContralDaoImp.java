@@ -39,7 +39,7 @@ public class HomeContralDaoImp implements HomeContralDao {
     }
 
     @Override
-    public void addHomeContral(HomeContral homeContral) {
+    public void insertHomeContral(HomeContral homeContral) {
         try {
             InputStream inputStream= Resources.getResourceAsStream("mybatis/mybatis.xml");
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);

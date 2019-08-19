@@ -23,7 +23,7 @@
 
     </select>
 
-    <insert id="addFarmControl">
+    <insert id="insertFarmControl">
         insert
         into farm_control(humidity,tmp,need)
         value (#{humidity},#{tmp},#{need})

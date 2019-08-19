@@ -48,6 +48,8 @@ public class Data {
 
     private String purpose;
 
+    private String idDate;
+
 //    软件——农用
     private String hostName;
 
@@ -304,6 +306,13 @@ public class Data {
         this.idCode = idCode;
     }
 
+    public String getIdDate() {
+        return idDate;
+    }
+
+    public void setIdDate(String idDate) {
+        this.idDate = idDate;
+    }
 
     @Override
     public String toString() {
@@ -332,6 +341,7 @@ public class Data {
                 ", ifUsed='" + ifUsed + '\'' +
                 ", todayUsed='" + todayUsed + '\'' +
                 ", purpose='" + purpose + '\'' +
+                ", idDate='" + idDate + '\'' +
                 ", hostName='" + hostName + '\'' +
                 ", count='" + count + '\'' +
                 ", cameras='" + cameras + '\'' +

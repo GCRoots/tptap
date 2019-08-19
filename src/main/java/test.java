@@ -1,14 +1,8 @@
 import com.alibaba.fastjson.JSON;
-import tapDame.dao.FarmContralDao;
-import tapDame.dao.FarmStatusDao;
-import tapDame.dao.UserDao;
-import tapDame.dao.ipm.FarmContralDaoImp;
-import tapDame.dao.ipm.FarmStatusDaoImp;
-import tapDame.dao.ipm.UserDaoImp;
-import tapDame.pojo.Data;
-import tapDame.pojo.FarmControl;
-import tapDame.pojo.FarmStatus;
-import tapDame.pojo.User;
+import com.alibaba.fastjson.JSONObject;
+import tapDame.dao.*;
+import tapDame.dao.ipm.*;
+import tapDame.pojo.*;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -20,41 +14,27 @@ public class test {
 
     public static void main(String[] args) throws IOException {
 
-//        UserDao userServer=new UserDaoImp();
-//        FarmContralDao farmContralDao=new FarmContralDaoImp();
-//        FarmStatusDao farmStatusDao=new FarmStatusDaoImp();
-//
-//
-//        String s="{\"humidity\":\"39\",\"tapId\":\"1\",\"camera\":\"f\"," +
-//                "\"sensor1\":\"t\",\"sensor2\":\"t\",\"sensor3\":\"f\",\"sensor4\":\"f\",\"sensor5\":\"f\"}";
-//        Data data= JSON.parseObject(s,Data.class);
-//
-//
-//
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-//        String lastTime=df.format(new Date());
-//
-//        FarmStatus farmStatus=new FarmStatus();
-//        farmStatus.setTapId(data.getTapId());
-//        farmStatus.setCamera(data.getCamera());
-//        farmStatus.setSensor1(data.getSensor1());
-//        farmStatus.setSensor2(data.getSensor2());
-//        farmStatus.setSensor3(data.getSensor3());
-//        farmStatus.setSensor4(data.getSensor4());
-//        farmStatus.setSensor5(data.getSensor5());
-//        farmStatus.setHumidity(data.getHumidity());
-//        farmStatus.setLastTime(lastTime);
-////
-//        FarmStatus farmStatus1=farmStatusDao.findByFId(data.getTapId());
-//        System.out.println(farmStatus1.toString());
-////        farmStatus.setLastTime(farmStatus1.getLastTime());
-//
-////        farmStatusDao.updateFarmStatus(farmStatus);
+        UserDao userServer = new UserDaoImp();
+        FarmContralDao farmContralDao = new FarmContralDaoImp();
+        FarmStatusDao farmStatusDao = new FarmStatusDaoImp();
+        DailyWaterDao dailyWaterDao = new DailyWaterDaoImp();
+        HomeStatusDao homeStatusDao = new HomeStatusDaoImp();
 
+//
+//        DailyWater dailyWater=dailyWaterDao.findByDate("");
+//        String purpose=dailyWater.getPurpose();
+//        System.out.println(purpose);
+//
+//        JSONObject jsonObject=JSON.parseObject(purpose);
+//        System.out.println(jsonObject.toJSONString());
+//        System.out.println(jsonObject.getString("洗手"));
 
-        String sa=null;
-        System.out.println(sa);
-
+        Date date = new Date();
+        System.out.println(date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");//设置当前时间的格式，为年-月-日
+        System.out.println(dateFormat.format(date));
+        SimpleDateFormat dateFormat_min = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");//设置当前时间的格式，为年-月-日 时-分-秒
+        System.out.println(dateFormat_min.format(date));
     }
 
 }

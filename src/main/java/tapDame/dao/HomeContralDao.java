@@ -6,6 +6,6 @@ import tapDame.pojo.HomeContral;
 
 public interface HomeContralDao {
     HomeContral findByType(String type);
-    void addHomeContral(HomeContral homeContral);
+    void insertHomeContral(HomeContral homeContral);
     void updateHomeContral(HomeContral homeContral);
 }

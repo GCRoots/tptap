@@ -37,7 +37,7 @@ public class HomeStatusDaoImp implements HomeStatusDao {
     }
 
     @Override
-    public void addHomeStatus(HomeStatus homeStatus) {
+    public void insertHomeStatus(HomeStatus homeStatus) {
         try {
             InputStream inputStream= Resources.getResourceAsStream("mybatis/mybatis.xml");
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);

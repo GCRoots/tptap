@@ -14,8 +14,6 @@
         <result property="microphone" column="microphone"/>
         <result property="camera" column="camera"/>
         <result property="ifUsed" column="if_used"/>
-        <result property="todayUsed" column="today_used"/>
-        <result property="purpose" column="purpose"/>
     </resultMap>
 
 
@@ -23,10 +21,10 @@
         select * from home_status where tap_id = #{tapId}
     </select>
 
-    <insert id="addHomeStatus">
+    <insert id="insertHomeStatus">
         insert
-        into home_status(tap_id, microphone, camera, if_used, today_used, purpose)
-        value (#{tapId},#{microphone},#{camera},#{ifUsed},#{todayUsed},#{purpose})
+        into home_status(tap_id, microphone, camera, if_used)
+        value (#{tapId},#{microphone},#{camera},#{ifUsed})
     </insert>
 
     <update id="updateHomeStatus">
@@ -34,9 +32,7 @@
             tap_id=#{tapId},
             microphone=#{microphone},
             camera=#{camera},
-            if_used=#{ifUsed},
-            today_used=#{todayUsed},
-            purpose=#{purpose}
+            if_used=#{ifUsed}
     </update>
 
     <delete id="delHomeStatus">

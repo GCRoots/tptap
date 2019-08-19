@@ -19,7 +19,7 @@
         select * from user where phone = #{phone}
     </select>
 
-    <insert id="addUser">
+    <insert id="insertUser">
         insert
         into user (phone, password)
         value (#{phone},#{password})

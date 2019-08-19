@@ -21,7 +21,7 @@
         select * from home_contral where type = #{type}
     </select>
 
-    <insert id="addHomeContral">
+    <insert id="insertHomeContral">
         insert
         into home_contral(type, image, sound, water)
         value (#{type},#{image},#{sound},#{water})

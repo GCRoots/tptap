@@ -38,7 +38,7 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public void addUser(User user) {
+    public void insertUser(User user) {
         try {
             InputStream inputStream= Resources.getResourceAsStream("mybatis/mybatis.xml");
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);

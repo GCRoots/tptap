@@ -6,8 +6,6 @@ public class HomeStatus {
     private String microphone;
     private String camera;
     private String ifUsed;
-    private String todayUsed;
-    private String purpose;
 
     public String getTapId() {
         return tapId;
@@ -40,22 +38,5 @@ public class HomeStatus {
     public void setIfUsed(String ifUsed) {
         this.ifUsed = ifUsed;
     }
-
-    public String getTodayUsed() {
-        return todayUsed;
-    }
-
-    public void setTodayUsed(String todayUsed) {
-        this.todayUsed = todayUsed;
-    }
-
-    public String getPurpose() {
-        return purpose;
-    }
-
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
-
 
 }

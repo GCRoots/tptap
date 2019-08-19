@@ -24,11 +24,17 @@ public class Login {
 
         User user=userDao.findByPhone(phone);
 
-        if (password.equals(user.getPassword())){
-            redata.setSuccess("t");
+        if (user!=null){
+            if (password.equals(user.getPassword())){
+                redata.setSuccess("t");
+            }else {
+                redata.setSuccess("f");
+            }
         }else {
             redata.setSuccess("f");
         }
+
+
 
         String res= JSON.toJSONString(redata);
         return res;
@@ -38,7 +44,7 @@ public class Login {
     }
 
 //    注册
-    public void register(Data data){
+    public String register(Data data){
         Data redata=new Data();
 
         String phone=data.getPhone();
@@ -47,10 +53,12 @@ public class Login {
 
 
 
+        String res= JSON.toJSONString(redata);
+        return res;
     }
 
 //    验证码
-    public void idCode(Data data){
+    public String idCode(Data data){
         Data redata=new Data();
 
         String phone=data.getPhone();
@@ -58,6 +66,8 @@ public class Login {
 
 
 
+        String res= JSON.toJSONString(redata);
+        return res;
 
     }
 

@@ -5,15 +5,19 @@ import com.baidu.aip.imageclassify.AipImageClassify;
 import com.baidu.aip.speech.AipSpeech;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import tapDame.dao.DailyWaterDao;
 import tapDame.dao.HomeContralDao;
 import tapDame.dao.HomeStatusDao;
+import tapDame.dao.ipm.DailyWaterDaoImp;
 import tapDame.dao.ipm.HomeContralDaoImp;
 import tapDame.dao.ipm.HomeStatusDaoImp;
+import tapDame.pojo.DailyWater;
 import tapDame.pojo.Data;
 import tapDame.pojo.HomeContral;
 import tapDame.pojo.HomeStatus;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +31,7 @@ public class HomeServerMethods {
 
     private HomeContralDao homeContralDao=new HomeContralDaoImp();
     private HomeStatusDao homeStatusDao=new HomeStatusDaoImp();
+    private DailyWaterDao dailyWaterDao=new DailyWaterDaoImp();
 
 
     public String homeWaterContral(Data data) throws IOException {
@@ -48,23 +53,33 @@ public class HomeServerMethods {
             return null;
         }else {
             homeContral=homeContralDao.findByType(image);
-            String water=homeContral.getWater();
+            HomeStatus homeStatus=homeStatusDao.findByHId(data.getTapId());
 
+            SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");//设置当前时间的格式，为年-月-日
+            String idDate=data.getTapId()+"_"+dateFormat.toString();
+            DailyWater dailyWater=dailyWaterDao.findByIdDate(idDate);
+
+            if (dailyWater==null){
+                dailyWater.setIdDate(idDate);
+                dailyWaterDao.insertDailyWater(dailyWater);
+                dailyWater=dailyWaterDao.findByIdDate(dateFormat.toString());
+            }
+
+            String water=homeContral.getWater();
             System.out.println(water);
             reData.setWater(water);
 
-            HomeStatus homeStatus=homeStatusDao.findByHId(data.getTapId());
 
-            int today=Integer.parseInt(homeStatus.getTodayUsed())+Integer.parseInt(water);
-            homeStatus.setTodayUsed(String.valueOf(today));
+            int today=Integer.parseInt(dailyWater.getTodayUsed())+Integer.parseInt(water);
+            dailyWater.setTodayUsed(String.valueOf(today));
 
-            com.alibaba.fastjson.JSONObject jsonObject=JSON.parseObject(homeStatus.getPurpose());
+            com.alibaba.fastjson.JSONObject jsonObject=JSON.parseObject(dailyWater.getPurpose());
             String type=jsonObject.getString(sound);
             int types=Integer.parseInt(type)+Integer.parseInt(water);
             jsonObject.put(sound,String.valueOf(types));
-            homeStatus.setPurpose(JSON.toJSONString(jsonObject));
+            dailyWater.setPurpose(JSON.toJSONString(jsonObject));
 
-            homeStatusDao.updateHomeStatus(homeStatus);
+            dailyWaterDao.updateDailyWater(dailyWater);
 
             String res= JSON.toJSONString(reData);
 
