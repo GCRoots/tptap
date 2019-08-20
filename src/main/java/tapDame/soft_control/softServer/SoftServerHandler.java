@@ -46,12 +46,14 @@ public class SoftServerHandler extends ChannelInboundHandlerAdapter {
                 ByteBuf buf = content.content();
                 String inputMessage = buf.toString(CharsetUtil.UTF_8);
 
-                String className = "tapDame.hard_control.home.server.HomeServerMethods";
+                String className = "tapDame.soft_control.softContraller";
 
                 String[] strings=uri.split("/");
                 for (String s:strings){
                     System.out.println(s);
                 }
+
+                className=className+"."+strings[0];
 
                 Data data = JSON.parseObject(inputMessage, Data.class);
                 Class proxy = Class.forName(className);

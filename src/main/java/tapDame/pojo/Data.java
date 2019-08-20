@@ -50,6 +50,8 @@ public class Data {
 
     private String idDate;
 
+    private String weather;
+
 //    软件——农用
     private String hostName;
 
@@ -314,6 +316,14 @@ public class Data {
         this.idDate = idDate;
     }
 
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
+    }
+
     @Override
     public String toString() {
         return "Data{" +
@@ -342,6 +352,7 @@ public class Data {
                 ", todayUsed='" + todayUsed + '\'' +
                 ", purpose='" + purpose + '\'' +
                 ", idDate='" + idDate + '\'' +
+                ", weather='" + weather + '\'' +
                 ", hostName='" + hostName + '\'' +
                 ", count='" + count + '\'' +
                 ", cameras='" + cameras + '\'' +
