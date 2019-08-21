@@ -53,15 +53,15 @@ public class HomeServerHandler extends ChannelInboundHandlerAdapter {
                 HomeServerMethods handler=(HomeServerMethods)proxy.getConstructor().newInstance();
                 Method method=proxy.getDeclaredMethod(strings[strings.length-1],Data.class);
                 res= (String) method.invoke(handler,data);
-                System.out.println();
+//                System.out.println();
 
 
 //                System.out.println(data.toString());
 
                 String humidity=data.getHumidity();
 
-                System.out.println(humidity);
-                System.out.println(buf.toString(CharsetUtil.UTF_8));
+//                System.out.println(humidity);
+//                System.out.println(buf.toString(CharsetUtil.UTF_8));
 
             } catch (Exception e) {
                 System.out.println("HttpContent bad");
