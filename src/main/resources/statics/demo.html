@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-3.3.1.js"></script>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<button class="btn"  id="demo">测试</button>
+<script type="text/javascript">
+    var a=document.getElementById('demo');
+    a.onclick=function(){
+        $.ajax({
+            type: "post",//数据发送的方式（post 或者 get）
+            head: "application/json; charset=UTF-8",
+            url: "softContraller/Login",//要发送的后台地址
+            data:JSON.stringify({
+                "uuid":"1"
+                ,"pag":"1"
+                ,"oid":"54"
+                // ,"in":"1"
+                // ,"gid":"001"
+                // ,"in":"1","ne":"上善若水","im":"https://s3-eu-west-1.amazonaws.com/img.frmoda.com/borse/aspinaloflondon/0421/alias/0421571074727BRIblu-01.jpg","lik":"http://my0039.cn/search2.html?ne=4"
+            }) , //要发送的数据（参数）格式
+            dataType: "json",//后台处理后返回的数据格式
+            contentType: "application/json; charset=utf-8",
+            //  traditional: true,                 //  加上序列化参数
+            success: function (data) {//ajax请求成功后触发的方法
+                console.log(data);
+                //此时的data为json格式 [object] 如果你想查看
+                // var datatext = JSON.stringify(data); //转为字符串
+                // $("resDiv").append(datatext); //在div中加上json转为字符串的数据
+                alert('请求成功');
+            },
+            error: function (msg) {//ajax请求失败后触发的方法
+                //  $('#resDiv').html(data); //请求失败
+                alert(msg);//弹出错误信息
+            }
+        });
+    }
+
+
+</script>
+<div id="resDiv"></div>
+</body>
+</html>
