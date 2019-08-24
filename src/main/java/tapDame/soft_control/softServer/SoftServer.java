@@ -37,9 +37,9 @@ public class SoftServer {
 
 
     public static void main(String[] args) throws InterruptedException {
-        HomeServer httpServer = new HomeServer();
+        SoftServer httpServer = new SoftServer();
         //绑定端口，端口随意。。。但也别太随意。。。。
-        httpServer.start(55555);
+        httpServer.start(12345);
     }
 
 

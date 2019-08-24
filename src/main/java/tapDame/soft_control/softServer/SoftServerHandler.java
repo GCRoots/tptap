@@ -13,6 +13,7 @@ import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import sun.misc.Request;
 import tapDame.hard_control.home.server.HomeServerMethods;
 import tapDame.pojo.Data;
 
@@ -37,6 +38,7 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 public class SoftServerHandler extends ChannelInboundHandlerAdapter {
 
     private WebSocketServerHandshaker handshaker;
+    private FullHttpRequest request;
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -47,91 +49,27 @@ public class SoftServerHandler extends ChannelInboundHandlerAdapter {
         if (msg instanceof FullHttpRequest) {
 
             json = handleHttpRequest(ctx, (FullHttpRequest) msg);
-            DefaultFullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(json.getBytes(StandardCharsets.UTF_8)));
-            response.headers().set(ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-            response.headers().set(ACCESS_CONTROL_ALLOW_HEADERS, "Origin, X-Requested-With, Content-Type, Accept");
-            response.headers().setInt(CONTENT_LENGTH, response.content().readableBytes());
-            ctx.writeAndFlush(response);
+            FullHttpResponse response = new DefaultFullHttpResponse(
+                    HttpVersion.HTTP_1_1,
+                    HttpResponseStatus.OK,
+                    Unpooled.wrappedBuffer(json.getBytes("UTF-8")));
+
+            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
+            response.headers().set(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
+//            if (HttpUtil.isKeepAlive(request)) {
+//                response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+//            }
+
+//            System.out.println();
+//            System.out.println(response);
+
+            ctx.write(response);
+            ctx.flush();
         } else if (msg instanceof WebSocketFrame){
             handlerWebSocketFrame(ctx, (TextWebSocketFrame) msg);
 
         }
-
-//
-//        Data reData=new Data();
-//
-//        String uri="";
-//
-//        if (msg instanceof HttpRequest) {
-//            //这里可以去取header之类的东西
-//            request = (FullHttpRequest) msg;
-//            uri=request.uri();
-//            System.out.println(uri);
-//        }
-//
-//        if (msg instanceof WebSocketFrame) {
-//            //这里来做content的相关处理吧
-//            try {
-//
-//                HttpContent content = (HttpContent) msg;
-//                ByteBuf buf = content.content();
-//                String inputMessage = buf.toString(CharsetUtil.UTF_8);
-//
-//                String className = "tapDame.soft_control.softContraller";
-//
-//                String[] strings=uri.split("/");
-//                for (String s:strings){
-//                    System.out.println(s);
-//                }
-//
-//                className=className+"."+strings[0];
-//
-//                Data data = JSON.parseObject(inputMessage, Data.class);
-//                Class proxy = Class.forName(className);
-//                HomeServerMethods handler=(HomeServerMethods)proxy.getConstructor().newInstance();
-//                Method method=proxy.getDeclaredMethod(strings[strings.length-1],Data.class);
-//                reData= (Data) method.invoke(handler,data);
-//                System.out.println();
-//
-//
-//                System.out.println(data.toString());
-//
-//                String humidity=data.getHumidity();
-//
-//                System.out.println(humidity);
-//                System.out.println(buf.toString(CharsetUtil.UTF_8));
-//
-//            } catch (Exception e) {
-//                System.out.println("HttpContent bad");
-//            }
-//
-//            /*
-//             *这中间可以写service,dao,等等的东西。。。感兴趣的话，大家fork一下代码，然后自由发挥就行。
-//             * */
-//
-//
-//            //response相关。。。
-//
-//
-//
-//            String res = JSON.toJSONString(reData);
-//
-//            FullHttpResponse response = new DefaultFullHttpResponse(
-//                    HttpVersion.HTTP_1_1,
-//                    HttpResponseStatus.OK,
-//                    Unpooled.wrappedBuffer(res.getBytes("UTF-8")));
-//
-//            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
-//            response.headers().set(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-//            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, response.content().readableBytes());
-//            if (HttpUtil.isKeepAlive(request)) {
-//                response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
-//
-//            }
-//
-//            ctx.write(response);
-//            ctx.flush();
-//        }
 
     }
 
@@ -146,9 +84,11 @@ public class SoftServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     private String handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest fuHr) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
-        String url = fuHr.uri();
+        String uri = fuHr.uri();
+
+        System.out.println(fuHr.toString());
         System.out.println("method:" + fuHr.method());
-        String json = "666666";
+        String json = "";
         /**
          * 唯一的一次http请求，用于创建websocket
          * */
@@ -156,24 +96,46 @@ public class SoftServerHandler extends ChannelInboundHandlerAdapter {
         if (!fuHr.decoderResult().isSuccess()
                 || (!"websocket".equals(fuHr.headers().get("Upgrade")))) {
             if (fuHr.method().toString().equals("GET")) {
-                if (url.contains("?")) {
-                    url = url.split("\\?")[0];
+                if (uri.contains("?")) {
+                    uri = uri.split("\\?")[0];
                 }
             }
-//            logger.info("URL: " + url);
-            ByteBuf byteBuf = fuHr.content();
-            String data = byteBuf.toString(Charset.forName("utf-8"));
-//            logger.info("data " + data);
-            String className = "Controller." + url.split("/")[1];
-            String methodName = "Return";
-            Class clz = Class.forName(className);
-            //Constructor constructor = clz.getConstructor(String.class);
-            // Object object = constructor.newInstance(data);
-            Object object = clz.newInstance();
-            //System.out.println(data);
-            Method m = object.getClass().getDeclaredMethod(methodName, String.class);
-            json = (String) m.invoke(object, data);
-            System.out.println(json);
+            ByteBuf buf = fuHr.content();
+            String inputMessage = buf.toString(CharsetUtil.UTF_8);
+
+//            System.out.println("imputMessage:"+inputMessage);
+
+            String className = "tapDame.soft_control.softContraller";
+
+            String[] strings = uri.split("/");
+            for (String s : strings) {
+                System.out.println(s);
+            }
+//            System.out.println(strings.length);
+//            System.out.println(strings.toString());
+            className = className + "." + strings[2];
+//            System.out.println(className);
+
+            Data data = JSON.parseObject(inputMessage, Data.class);
+
+//            System.out.println("data:"+data.toString());
+            Class proxy = Class.forName(className);
+//            System.out.println(proxy.toString());
+
+//            if (strings[2].equals("Home")){
+//            }else if (strings[2].equals("Home")){
+//            }else if (strings[2].equals("Home")){
+//            }
+
+            Object handler =proxy.getConstructor().newInstance();
+            Method method = proxy.getDeclaredMethod(strings[strings.length - 1], Data.class);
+            json = (String) method.invoke(handler, data);
+            System.out.println();
+
+//            System.out.println(data.toString());
+
+//            System.out.println(buf.toString(CharsetUtil.UTF_8));
+
             return json;
 
         }
@@ -212,10 +174,9 @@ public class SoftServerHandler extends ChannelInboundHandlerAdapter {
 
         String text=((TextWebSocketFrame)frame).text();
 
-        System.out.println(text);
+//        System.out.println(text);
 
-
-//        ctx.channel().writeAndFlush(new TextWebSocketFrame(((TextWebSocketFrame)frame).text()));
+        ctx.channel().writeAndFlush(new TextWebSocketFrame(text));
 
     }
 
@@ -234,9 +195,4 @@ public class SoftServerHandler extends ChannelInboundHandlerAdapter {
             f.addListener(ChannelFutureListener.CLOSE);
         }
     }
-
-
-
-
-
 }

@@ -17,14 +17,14 @@ public class SoftServerInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
+
         pipeline.addLast(new HttpResponseEncoder());//server端发送的是httpResponse,要进行编码
-
         pipeline.addLast(new HttpRequestDecoder());//server端接收的是httpRequest,要进行解码
-
         pipeline.addLast(new HttpObjectAggregator(65535));
-        //等待解码后的报文头和报文体一起扔给下一层
+        //等待解码后的报文头和报文
+        // 体一起扔给下一层
         pipeline.addLast(new ChunkedWriteHandler());
-        pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
+//        pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
         pipeline.addLast(new SoftServerHandler());//自定义handler
     }
 }
