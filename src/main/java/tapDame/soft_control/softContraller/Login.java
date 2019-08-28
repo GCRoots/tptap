@@ -35,7 +35,6 @@ public class Login {
         }
 
 
-
         String res= JSON.toJSONString(redata);
         return res;
 
