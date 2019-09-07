@@ -36,8 +36,8 @@ public class Farm {
         redata.setSensor3(farmStatus.getSensor3());
         redata.setSensor4(farmStatus.getSensor4());
         redata.setSensor5(farmStatus.getSensor5());
-        redata.setLastTime(farmStatus.getLastTime());
-        redata.setHumidity(farmStatus.getHumidity());
+        redata.setLastTime(farmStatus.getLastTime());  //上次浇水时间
+        redata.setHumidity(farmStatus.getHumidity());  // 当前土壤湿度
         redata.setWeather(weatherSoft());
 
         String res= JSON.toJSONString(redata);
@@ -89,10 +89,10 @@ public class Farm {
             String hum=now.getString("hum");
 
             Map<String,String> map=new HashMap();
-            map.put("location",location);
-            map.put("cond_txt",cond_txt);
-            map.put("tmp",tmp);
-            map.put("hum",hum);
+            map.put("location",location);   //地址
+            map.put("cond_txt",cond_txt);   //天气
+            map.put("tmp",tmp);    //温度
+            map.put("hum",hum);    //湿度
 
             JSONObject jsonObject=new JSONObject(map);
 
