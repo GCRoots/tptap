@@ -34,7 +34,6 @@ public class Login {
             redata.setSuccess("f");
         }
 
-
         String res= JSON.toJSONString(redata);
         return res;
 
@@ -48,9 +47,17 @@ public class Login {
 
         String phone=data.getPhone();
         String password=data.getPassword();
-        String idCode=data.getIdCode();
+//        String idCode=data.getIdCode();
 
+        User user=new User();
+        user.setPhone(phone);
+        user.setPassword(password);
 
+        userDao.insertUser(user);
+
+        if (userDao.findByPhone(phone)!=null)
+            redata.setSuccess("t");
+        else redata.setSuccess("f");
 
         String res= JSON.toJSONString(redata);
         return res;
