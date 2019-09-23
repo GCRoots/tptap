@@ -19,6 +19,7 @@ import tapDame.pojo.HomeStatus;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,8 +56,9 @@ public class HomeServerMethods {
             homeContral=homeContralDao.findByType(image);
             HomeStatus homeStatus=homeStatusDao.findByHId(data.getTapId());
 
+            Date date=new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");//设置当前时间的格式，为年-月-日
-            String idDate=data.getTapId()+"_"+dateFormat.toString();
+            String idDate=data.getTapId()+"_"+dateFormat.format(date);
             DailyWater dailyWater=dailyWaterDao.findByIdDate(idDate);
 
             if (dailyWater==null){

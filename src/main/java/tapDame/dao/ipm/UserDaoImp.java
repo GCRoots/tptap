@@ -43,7 +43,7 @@ public class UserDaoImp implements UserDao {
             InputStream inputStream= Resources.getResourceAsStream("mybatis/mybatis.xml");
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             session=sqlSessionFactory.openSession();
-            session.insert("addUser",user);
+            session.insert("insertUser",user);
 
             session.commit();
 

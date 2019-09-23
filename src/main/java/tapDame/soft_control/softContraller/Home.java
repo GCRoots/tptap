@@ -10,6 +10,7 @@ import tapDame.pojo.Data;
 import tapDame.pojo.HomeStatus;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author shipengfei
@@ -45,7 +46,10 @@ public class Home {
         String tapId=data.getTapId();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");//设置当前时间的格式，为年-月-日
-        String idDate=tapId+"_"+dateFormat.toString();
+
+        Date date=new Date();
+        String idDate=tapId+"_"+dateFormat.format(date);
+
         DailyWater dailyWater=dailyWaterDao.findByIdDate(idDate);
 
         if (dailyWater==null){
