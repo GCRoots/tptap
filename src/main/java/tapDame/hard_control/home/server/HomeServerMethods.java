@@ -64,7 +64,7 @@ public class HomeServerMethods {
             if (dailyWater==null){
                 dailyWater.setIdDate(idDate);
                 dailyWaterDao.insertDailyWater(dailyWater);
-                dailyWater=dailyWaterDao.findByIdDate(dateFormat.toString());
+                dailyWater=dailyWaterDao.findByIdDate(idDate);
             }
 
             String water=homeContral.getWater();
@@ -76,6 +76,11 @@ public class HomeServerMethods {
             dailyWater.setTodayUsed(String.valueOf(today));
 
             com.alibaba.fastjson.JSONObject jsonObject=JSON.parseObject(dailyWater.getPurpose());
+
+            if (sound.equals("洗手"))
+                sound="hands";
+            else sound="fruits";
+
             String type=jsonObject.getString(sound);
             int types=Integer.parseInt(type)+Integer.parseInt(water);
             jsonObject.put(sound,String.valueOf(types));
