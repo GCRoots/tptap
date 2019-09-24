@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="signin.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <style>
+        .button {
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: auto;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 50%;
+            height: 30px;
+            border-radius: 4px;
+        }
+        .forget{
+            position: absolute;
+            right: 4px;
+            bottom: 64%;
+            font-size: x-small;
+        }
+        /*.btn {*/
+            /*border: 0;*/
+        /*}*/
+
+    </style>
+</head>
+<body>
+
+<div>
+    <nav class="navbar-default navbar-fixed-top">
+        <style>
+            body {
+                padding-top: 50px
+            }
+        </style>
+        <div class="container">
+            <div class="naval-header">
+                <button type="button" class="btn btn-default nab-btn" onclick="myFunction()"><</button>
+            </div>
+            <script language="JavaScript" type="text/javascript">
+                function myFunction() {
+                    window.history.back(-1);
+                }
+            </script>
+        </div>
+    </nav>
+</div>
+
+<div class="center-block">
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">手机号</label>
+            <div class="col-sm-8">
+                <input type="number" class="form-control" id="Phone" placeholder="请输入手机号">
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control" id="Password" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> Remember me
+                </label>
+            </div>
+        </div>
+        <div class="forget">
+            <a href="5ForgetPassWord.html" target="_self" >忘记密码</a>
+        </div>
+        <div style="text-align: center">
+            <button class="button " type="button" id="login" onclick="Login()//self.location.href='7Homepage.html'">登录</button>
+        </div>
+        <script type="text/javascript">
+            var phone= $("#Phone").value();
+            var password = $("#Password").value();
+            function Login() {
+                $('#login').click(function () {
+                    $.ajax({
+                        url:"http://localhost:12345/softContraller/Login/login",
+                        type:"post",
+                        dataType:"json",
+                        // jsonpCallback:"successCallback",
+                        async:false,
+                        data:'{"phone":"'+phone+'","password":"'+password+'"}',
+                        success:function (res) {
+                            console.log("www");
+                            if (res.success==="t"){
+                                window.location.href = "7Homepage.html";
+                            }else {
+                                alert("手机号或密码错误");
+                            }
+                        },
+                        error:function () {
+                            console.log("error!");
+                            alert("发生错误");
+                        }
+                    })
+                })
+            }
+        </script>
+    </form>
+</div>
+
+</body>
+</html>

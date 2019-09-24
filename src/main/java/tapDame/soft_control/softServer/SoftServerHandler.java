@@ -103,7 +103,7 @@ public class SoftServerHandler extends ChannelInboundHandlerAdapter {
             ByteBuf buf = fuHr.content();
             String inputMessage = buf.toString(CharsetUtil.UTF_8);
 
-//            System.out.println("imputMessage:"+inputMessage);
+            System.out.println("imputMessage:"+inputMessage);
 
             String className = "tapDame.soft_control.softContraller";
 
@@ -132,9 +132,11 @@ public class SoftServerHandler extends ChannelInboundHandlerAdapter {
             json = (String) method.invoke(handler, data);
             System.out.println();
 
-//            System.out.println(data.toString());
+            System.out.println(data.toString());
 
 //            System.out.println(buf.toString(CharsetUtil.UTF_8));
+
+            System.out.println(json);
 
             return json;
 

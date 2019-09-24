@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Farming</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="signin.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+
+    <style>
+        .word {
+            color: #2e6da4;
+            position: absolute;
+            right: 10%;
+            top: 10%;
+        }
+
+        .word1 {
+            color: #2e6da4;
+            position: absolute;
+            right: 10%;
+            top: 15%;
+        }
+
+        .word2 {
+            color: #2e6da4;
+            position: absolute;
+            right: 10%;
+            top: 20%;
+        }
+
+        .word3{
+            color: #2e6da4;
+            position: absolute;
+            right: 10%;
+            top: 25%;
+        }
+
+        .working {
+            color: #2e6da4;
+            position: absolute;
+            left: 15%;
+            top: 30%;
+        }
+
+        .sxt1 {
+            color: #2e6da4;
+            position: absolute;
+            left: 45%;
+            top: 40%;
+        }
+
+        .sxt2{
+            color: #2e6da4;
+            position: absolute;
+            left: 45%;
+            top: 46%;
+        }
+        .sxt3{
+            color: #2e6da4;
+            position: absolute;
+            left: 45%;
+            top: 52%;
+        }
+        .sxt4{
+            color: #2e6da4;
+            position: absolute;
+            left: 45%;
+            top: 58%;
+        }
+
+        .sxt5{
+            color: #2e6da4;
+            position: absolute;
+            left: 45%;
+            top: 64%;
+        }
+
+        .word4{
+            color: #2e6da4;
+            position: absolute;
+            left: 10%;
+            bottom: 20%;
+        }
+
+        .word5{
+            color: #2e6da4;
+            position: absolute;
+            left: 10%;
+            bottom: 13%;
+        }
+
+        .word6{
+            color: #2e6da4;
+            position: absolute;
+            left: 10%;
+            bottom: 6%;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <nav class="navbar-default navbar-fixed-top">
+        <style>
+            body {
+                padding-top: 50px
+            }
+        </style>
+        <div class="container">
+            <div class="naval-header">
+                <button type="button" class="close  naval-btn " aria-label="Close" onclick="myFunction()">&times</button>
+            </div>
+            <script language="JavaScript" type="text/javascript">
+                function myFunction() {
+                    window.history.back(-1);
+                }
+            </script>
+        </div>
+    </nav>
+</div>
+
+<div>
+    <h6 class=" word " >当前地址：<span id="location"></span></h6>
+    <h6 class=" word1 " >当前天气：<span id ="cond_txt"></span></h6>
+    <h6 class=" word2" >当前温度：<span id ="tmp"></span></h6>
+    <h6 class=" word3" >当前湿度：<span id ="hum"></span></h6>
+</div>
+<!--<script type="text/javascript">-->
+    <!--$(document).ready(function () {-->
+        <!--$.ajax({-->
+            <!--url: "http://localhost:12345/softContraller/Farm/weatherSoft",-->
+            <!--type: "post",-->
+            <!--dataType: "json",-->
+            <!--async: false,-->
+            <!--contentType:"application/x-www-form-urlencoded;charset=utf-8",//限定为UTF-8格式-->
+            <!--data: '{"tapId":"1"}',-->
+            <!--success:function (res) {-->
+                <!---->
+            <!--}-->
+
+        <!--})-->
+    <!--})-->
+<!--</script>-->
+
+<div>
+    <h3 class="working">
+        工作状态：
+    </h3>
+    <h5 class="sxt1">
+        传感器1:
+        <canvas id="myCanvas" width="10" height="10" style="border: 1px solid #000000"></canvas>
+        <script>
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+        </script>
+    </h5>
+</div>
+
+<div>
+    <h5 class="sxt2">
+        传感器2:
+        <canvas id="myCanvas1" width="10" height="10" style="border: 1px solid #000000"></canvas>
+        <script>
+            var c = document.getElementById("myCanvas1");
+            var ctx1 = c.getContext("2d");
+        </script>
+    </h5>
+</div>
+
+<div>
+    <h5 class="sxt3">
+        传感器3:
+        <canvas id="myCanvas2" width="10" height="10" style="border: 1px solid #000000"></canvas>
+        <script>
+            var c = document.getElementById("myCanvas2");
+            var ctx2 = c.getContext("2d");
+        </script>
+    </h5>
+</div>
+<div>
+    <h5 class="sxt4">
+       传感器4:
+        <canvas id="myCanvas3" width="10" height="10" style="border: 1px solid #000000"></canvas>
+        <script>
+            var c = document.getElementById("myCanvas3");
+            var ctx3 = c.getContext("2d");
+        </script>
+    </h5>
+</div>
+<div>
+    <h5 class="sxt5">
+        传感器5:
+        <canvas id="myCanvas4" width="10" height="10" style="border: 1px solid #000000"></canvas>
+        <script>
+            var c = document.getElementById("myCanvas4");
+            var ctx4 = c.getContext("2d");
+        </script>
+    </h5>
+</div>
+<div>
+    <h4 class="word4">上次浇水时间：<span id="LastTime"></span> </h4>
+    <h4 class="word5">当前土壤湿度：<span id="Humidity"></span></h4>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url:"http://localhost:12345/softContraller/Farm/farmPage",
+            type:"post",
+            dataType:"json",
+            // jsonpCallback:"successCallback",
+            async:true,
+            contentType:"application/x-www-form-urlencoded;charset=utf-8",//限定为UTF-8格式
+            data:'{"tapId":"1"}', //传给后端的数据，
+            success:function (res) {
+                console.log("fff");
+                if (res.sensor1==="t"){
+                    ctx.fillStyle="#b7ff97";
+                    ctx.fillRect(0,0,10,10);
+                }else {
+                    ctx.fillStyle="#ff3f49";
+                    ctx.fillRect(0,0,10,10);
+                }
+                console.log("jjj");
+                if (res.sensor2==="t"){
+                    ctx1.fillStyle="#b7ff97";
+                    ctx1.fillRect(0,0,10,10);
+                }else {
+                    ctx1.fillStyle="#ff3f49";
+                    ctx1.fillRect(0,0,10,10);
+                }
+                console.log("mmm");
+                if (res.sensor3==="t"){
+                    ctx2.fillStyle="#b7ff97";
+                    ctx2.fillRect(0,0,10,10);
+                }else {
+                    ctx2.fillStyle="#ff3f49";
+                    ctx2.fillRect(0,0,10,10);
+                }
+                console.log("bbb");
+                if (res.sensor4==="t"){
+                    ctx3.fillStyle="#b7ff97";
+                    ctx3.fillRect(0,0,10,10);
+                }else {
+                    ctx3.fillStyle="#ff3f49";
+                    ctx3.fillRect(0,0,10,10);
+                }
+                console.log("aaa");
+                if (res.sensor5==="t"){
+                    ctx4.fillStyle="#b7ff97";
+                    ctx4.fillRect(0,0,10,10);
+                }else {
+                    ctx4.fillStyle="#ff3f49";
+                    ctx4.fillRect(0,0,10,10);
+                }
+                console.log("yyy");
+                document.getElementById("LastTime").innerHTML=res.lastTime;
+                console.log("eee");
+                document.getElementById("Humidity").innerHTML=res.humidity;
+
+                console.log("vvv");
+                var a=JSON.parse(res.weather)
+                document.getElementById("location").innerHTML=a.location;
+                console.log("zzz");
+                document.getElementById("cond_txt").innerHTML=a.cond_txt;
+                console.log("ddd");
+                document.getElementById("tmp").innerHTML=a.tmp;
+                console.log("ccc");
+                document.getElementById("hum").innerHTML=a.hum;
+
+            }
+        })
+    })
+</script>
+</body>
+</html>

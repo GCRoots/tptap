@@ -49,7 +49,7 @@ public class Farm {
         //参数字符串，如果拼接在请求链接之后，需要对中文进行 URLEncode   字符集 UTF-8
         String param = "key=a9f72b3f74a24439863952cd65a6c082&location=天津";
         StringBuilder sb = new StringBuilder();
-        String ret=null;
+        String res=null;
         InputStream is = null;
         BufferedReader br = null;
         PrintWriter out = null;
@@ -96,7 +96,7 @@ public class Farm {
 
             JSONObject jsonObject=new JSONObject(map);
 
-            ret=jsonObject.toString();
+            res=jsonObject.toString();
 
 
         } catch ( Exception ignored ) {
@@ -116,7 +116,7 @@ public class Farm {
         }
 
 
-        return ret;
+        return res;
     }
 
 }
