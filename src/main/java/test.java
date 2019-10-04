@@ -2,6 +2,7 @@ import com.alibaba.fastjson.JSON;
 import org.json.JSONObject;
 import tapDame.dao.*;
 import tapDame.dao.ipm.*;
+import tapDame.dao.redis.RedisOperating;
 import tapDame.pojo.*;
 
 import java.io.IOException;
@@ -16,18 +17,27 @@ public class test {
 
     public static void main(String[] args) throws IOException {
 
-        UserDao userServer = new UserDaoImp();
-        FarmContralDao farmContralDao = new FarmContralDaoImp();
-        FarmStatusDao farmStatusDao = new FarmStatusDaoImp();
-        DailyWaterDao dailyWaterDao = new DailyWaterDaoImp();
-        HomeStatusDao homeStatusDao = new HomeStatusDaoImp();
+
+        Map hash = new HashMap<String,String>();
+        hash.put("15995115","147852");
+        RedisOperating.hset("daily_water",hash);
+
+        Map map = RedisOperating.hgetAll("coupon");
+        System.out.println(map.keySet());
 
 
-
-        DailyWater dailyWater=dailyWaterDao.findByIdDate("1_2019-09-23");
-        System.out.println(dailyWater.toString());
-        String purpose=dailyWater.getPurpose();
-        System.out.println(purpose);
+//        UserDao userServer = new UserDaoImp();
+//        FarmContralDao farmContralDao = new FarmContralDaoImp();
+//        FarmStatusDao farmStatusDao = new FarmStatusDaoImp();
+//        DailyWaterDao dailyWaterDao = new DailyWaterDaoImp();
+//        HomeStatusDao homeStatusDao = new HomeStatusDaoImp();
+//
+//
+//
+//        DailyWater dailyWater=dailyWaterDao.findByIdDate("1_2019-09-23");
+//        System.out.println(dailyWater.toString());
+//        String purpose=dailyWater.getPurpose();
+//        System.out.println(purpose);
 //
 //        JSONObject jsonObject=JSON.parseObject(purpose);
 //        System.out.println(jsonObject.toJSONString());

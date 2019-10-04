@@ -3,8 +3,12 @@ package tapDame.soft_control.softContraller;
 import com.alibaba.fastjson.JSON;
 import tapDame.dao.UserDao;
 import tapDame.dao.ipm.UserDaoImp;
+import tapDame.dao.redis.RedisOperating;
 import tapDame.pojo.Data;
 import tapDame.pojo.User;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author shipengfei
@@ -45,6 +49,9 @@ public class Login {
     public String register(Data data){
         Data redata=new Data();
 
+//        Map hash = new HashMap<String,String>();
+
+
         String phone=data.getPhone();
         String password=data.getPassword();
 //        String idCode=data.getIdCode();
@@ -52,6 +59,9 @@ public class Login {
         User user=new User();
         user.setPhone(phone);
         user.setPassword(password);
+
+//        hash.put(user.getPhone(),user.getPassword());
+//        RedisOperating.hset("daily_water",hash);
 
         userDao.insertUser(user);
 
