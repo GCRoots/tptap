@@ -19,10 +19,15 @@
     <style>
 
         body{
-            background-image:url("./image/timg5.jpg");
+            background-image:url("./image/timg8.jpg");
             background-repeat:no-repeat ;
-            background-size:100% 100%;
+            background-size:cover;
             background-attachment: fixed;
+        }
+        .center-block {
+            position: absolute;
+            bottom: 40%;
+            left: 15%;
         }
         .button {
             background-color: #008CBA;
@@ -43,7 +48,7 @@
             font-size: x-small;
         }
         /*.btn {*/
-            /*border: 0;*/
+        /*border: 0;*/
         /*}*/
 
     </style>
@@ -89,24 +94,26 @@
                 </label>
             </div>
         </div>
-        <div class="forget">
-            <a href="5ForgetPassWord.html" target="_self" >忘记密码</a>
-        </div>
+        <!--<div class="forget">-->
+        <!--<a href="5ForgetPassWord.html" target="_self" >忘记密码</a>-->
+        <!--</div>-->
         <div style="text-align: center">
             <button class="button " type="button" id="login" onclick="Login()//self.location.href='7Homepage.html'">登录</button>
         </div>
         <script type="text/javascript">
-            var phone= $("#Phone").value();
-            var password = $("#Password").value();
+            // var phone= $('#Phone').value();
+            // var password = $('#Password').value();
+            var phone=document.getElementById("Phone");
+            var password=document.getElementById("Password");
             function Login() {
                 $('#login').click(function () {
                     $.ajax({
                         url:"http://47.93.102.98:12345/softContraller/Login/login",
                         type:"post",
                         dataType:"json",
-                        // jsonpCallback:"successCallback",
+                        jsonpCallback:"successCallback",
                         async:false,
-                        data:'{"phone":"'+phone+'","password":"'+password+'"}',
+                        data:'{"phone":"'+phone.value+'","password":"'+password.value+'"}',
                         success:function (res) {
                             console.log("www");
                             if (res.success==="t"){

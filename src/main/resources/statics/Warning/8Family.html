@@ -19,9 +19,9 @@
 
     <style>
         body{
-            background-image:url("./image/timg5.jpg");
+            background-image:url("./image/timg8.jpg");
             background-repeat:no-repeat ;
-            background-size:100% 100%;
+            background-size:cover;
             background-attachment: fixed;
         }
         .working{
@@ -111,15 +111,24 @@
                     if (res.microphone==="t") {
                         ctx1.fillStyle="#b7ff97";
                         ctx1.fillRect(0,0,10,10);
+                    }else {
+                        ctx1.fillStyle="#ff3f49";
+                        ctx1.fillRect(0,0,10,10);
                     }
                     console.log("xxx");
                     if (res.camera==="t"){
                         ctx2.fillStyle="#b7ff97";
                         ctx2.fillRect(0,0,10,10);
+                    }else {
+                        ctx2.fillStyle="#ff3f49";
+                        ctx2.fillRect(0,0,10,10);
                     }
                     console.log("uuu");
                     if (res.ifUsed==="t"){
                         ctx3.fillStyle="#b7ff97";
+                        ctx3.fillRect(0,0,10,10);
+                    }else {
+                        ctx3.fillStyle="#ff3f49";
                         ctx3.fillRect(0,0,10,10);
                     }
                 },

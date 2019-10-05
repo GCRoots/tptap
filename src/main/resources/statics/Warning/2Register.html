@@ -20,9 +20,9 @@
     <style>
 
         body{
-            background-image:url("./image/logo.jpg");
+            background-image:url("./image/timg8.jpg");
             background-repeat:no-repeat ;
-            background-size:100% 100%;
+            background-size:cover;
             background-attachment: fixed;
         }
         .center-block {
@@ -103,8 +103,10 @@
         <button class="button " id="registration" type="button" onclick="Check()//self.location.href='4Login.html'">注册</button>
     </div>
     <script type="text/javascript">
-        var phone = $("#phone").value();
-        var password = $("#password").value();
+        // var phone = $("#phone").val();
+        // var password = $("#password").val();
+        var phone=document.getElementById("phone");
+        var password=document.getElementById("password");
         function Check() {
             $("#registration").click(function () {
                 $.ajax({
@@ -113,7 +115,8 @@
                     dataType:"json",
                     jsonpCallback:"successCallback", //如果不写这一句，直接执行error；
                     async:false,
-                    data:'{"phone":"'+phone+'","password":"'+password+'"}',
+                    data:'{"phone":"'+phone.value+'","password":"'+password.value+'"}',
+                    // data:{phone:phone,password:password},
                     success:function (res) {
                         console.log("aaa");
                         if (res.success==="t"){
@@ -124,7 +127,7 @@
                     },
                     error:function () {
                         console.log("error!!!!!");
-                        alert("手机号已注册");
+                        alert("发生错误");
                     }
                 })
             })
