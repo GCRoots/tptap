@@ -20,7 +20,7 @@
     <style>
 
         body{
-            background-image:url("./image/timg5.jpg");
+            background-image:url("./image/logo.jpg");
             background-repeat:no-repeat ;
             background-size:100% 100%;
             background-attachment: fixed;
@@ -108,7 +108,7 @@
         function Check() {
             $("#registration").click(function () {
                 $.ajax({
-                    url:"http://localhost:12345/softContraller/Login/register",
+                    url:"http://47.93.102.98:12345/softContraller/Login/register",
                     type:"post",
                     dataType:"json",
                     jsonpCallback:"successCallback", //如果不写这一句，直接执行error；
@@ -124,7 +124,7 @@
                     },
                     error:function () {
                         console.log("error!!!!!");
-                        alert("发生错误");
+                        alert("手机号已注册");
                     }
                 })
             })
